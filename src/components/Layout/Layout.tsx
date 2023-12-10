@@ -23,6 +23,16 @@ const StyledLayout = styled.div`
 
   padding: 34px 0;
   gap: 34px;
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.tablet}) {
+    gap: 32px;
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.mobile}) {
+    padding: 0;
+    padding-top: 24px;
+    gap: 27px;
+  }
 `;
 
 const StyledOutletWrapper = styled.div`

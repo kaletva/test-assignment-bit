@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { IUsersSearchParams } from "@/types";
 import { MyOrganizationUsersTableHead } from "./MyOrganizationUsersTableHead";
 import { useUserListQuery } from "@/api/services/userService";
-import { BodyText } from "@/shared/Text";
 import { MyOrganizationUsersTableRow } from "./MyOrganizationUsersTableRow";
+import { LoaderError, LoaderSpin } from "@/shared/Loaders";
 
 interface IProps {
   searchParams: IUsersSearchParams;
@@ -21,30 +21,34 @@ export const MyOrganizationUsersTable: React.FC<IProps> = ({
     isFetching,
   } = useUserListQuery(searchParams);
 
-  if (isFetching)
-    return <BodyText textColor="accentPrimary">Fetching</BodyText>;
+  if (isFetching) return <LoaderSpin />;
 
-  if (isError)
-    return <BodyText textColor="otherCritic">Unknown error</BodyText>;
+  if (isError) return <LoaderError />;
 
   if (usersList) {
     return (
-      <StyledMyOrganizationUsersTable>
-        <MyOrganizationUsersTableHead
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-        />
-        <tbody>
-          {usersList.data.map((user) => (
-            <MyOrganizationUsersTableRow key={user.id} user={user}/>
-          ))}
-        </tbody>
-      </StyledMyOrganizationUsersTable>
+      <StyledTableWrapper>
+        <StyledMyOrganizationUsersTable>
+          <MyOrganizationUsersTableHead
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
+          />
+          <tbody>
+            {usersList.data.map((user) => (
+              <MyOrganizationUsersTableRow key={user.id} user={user} />
+            ))}
+          </tbody>
+        </StyledMyOrganizationUsersTable>
+      </StyledTableWrapper>
     );
   }
   return null;
 };
 
+const StyledTableWrapper = styled.div`
+  overflow-x: scroll;
+`;
 const StyledMyOrganizationUsersTable = styled.table`
   border-collapse: collapse;
+  width: 100%;
 `;

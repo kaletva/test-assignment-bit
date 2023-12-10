@@ -12,4 +12,11 @@ export const MyOrganizationHead = () => {
 
 const StyledMyOrganizationHead = styled.div`
   padding: 24px 34px;
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.tablet}) {
+    padding: 24px 24px;
+  }
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.mobile}) {
+    padding: 18px 16px;
+  }
 `;

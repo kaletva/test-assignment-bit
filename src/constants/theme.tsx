@@ -128,5 +128,5 @@ export const INPUT_TEXT_STYLES = {
 export const MEDIA_STYLES = {
   desktop: "1920px",
   tablet: "834px",
-  mobile: "375px",
+  mobile: "480px",
 };

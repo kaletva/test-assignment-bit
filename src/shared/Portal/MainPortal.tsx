@@ -9,6 +9,7 @@ interface IProps {
 }
 
 export const MainPortal: React.FC<IProps> = ({ portalOpened, children }) => {
+  document.body.style.overflow = portalOpened ? "hidden" : "scroll";
   return createPortal(
     <AnimatePresence>
       {portalOpened && (

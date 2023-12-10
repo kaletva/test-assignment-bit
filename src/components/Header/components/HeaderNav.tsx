@@ -23,4 +23,10 @@ const StyledHeaderLink = styled(Link)`
 `;
 const StyledHeaderNav = styled.nav`
   flex: 1;
+  padding-left: 26px;
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.mobile}) {
+    flex: none;
+    padding-left: 0px;
+  }
 `;

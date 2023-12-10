@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
     body {
-        font-family: 'Roboto', sans-serif;
+        font-family: 'IBM Plex Sans', sans-serif;
         background-color: ${(props) => props.theme.colors.baseBlack};
     }
     a{
@@ -25,7 +25,7 @@ export const GlobalStyle = createGlobalStyle`
     input{
         transition: border 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
-    
+
     button {
         cursor: pointer;
         border: none;

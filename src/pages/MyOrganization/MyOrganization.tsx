@@ -21,4 +21,8 @@ const StyledMyOrganizationContainer = styled.section`
   flex-direction: column;
   border-radius: 18px;
   background: ${(props) => props.theme.colors.grayScaleGray4};
+  
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.mobile}) {
+    border-radius: 0px;
+  }
 `;

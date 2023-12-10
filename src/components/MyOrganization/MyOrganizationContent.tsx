@@ -44,5 +44,14 @@ const StyledMyOrganizationContent = styled.div`
   flex-direction: column;
   gap: 24px;
 
-  padding: 29px 34px 45px 29px;
+  padding: 29px 34px 45px 34px;
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.tablet}) {
+    padding: 29px 24px 34px 24px;
+    gap: 18px;
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.mobile}) {
+    padding: 26px 18px 51px 18px;
+  }
 `;

@@ -5,30 +5,25 @@ import styled from "styled-components";
 import CloseIcon from "/public/icons/close.svg";
 import { HorizontalDivider } from "@/shared/Dividers";
 import { ProfileInfoChart, ProfileInfoTable } from "./ProfileInfoComponents";
-import { useUserListQuery } from "@/api/services/userService";
 import { useUserTransactionsQuery } from "@/api/services/transactionService";
 import { useClickOutside } from "@/hooks";
+import { IUser } from "@/types";
+import { LoaderError, LoaderSpin } from "@/shared/Loaders";
 
 interface IProps {
   setProfileInfoOpened: Dispatch<SetStateAction<boolean>>;
+  user: IUser;
 }
 
-export const ProfileInfo: React.FC<IProps> = ({ setProfileInfoOpened }) => {
-  const { data: usersList } = useUserListQuery({
-    orderBy: "tokens:desc",
-    page: 1,
-    search: "",
-  });
-
-  const userData = usersList?.data[0];
-
+export const ProfileInfo: React.FC<IProps> = ({
+  setProfileInfoOpened,
+  user,
+}) => {
   const {
     data: transactionsList,
     isFetching,
     isError,
-  } = useUserTransactionsQuery(userData?.id, {
-    skip: userData?.id === undefined,
-  });
+  } = useUserTransactionsQuery(user.id);
 
   const profileModalRef = useRef<HTMLDivElement>(null);
   useClickOutside(profileModalRef, () => setProfileInfoOpened(false));
@@ -41,30 +36,28 @@ export const ProfileInfo: React.FC<IProps> = ({ setProfileInfoOpened }) => {
       transition={{ duration: 0.3 }}
     >
       <StyledProfileInfoHead>
-        <BodyText size="xlSemibold">{userData?.email}</BodyText>
+        <BodyText size="xlSemibold">{user.email}</BodyText>
         <button onClick={() => setProfileInfoOpened(false)}>
           <CloseIcon />
         </button>
       </StyledProfileInfoHead>
 
-      {isFetching && <BodyText size="xlSemibold">Загрузка...</BodyText>}
-      
-      {isError && (
-        <BodyText size="xlSemibold">Произошла неизвестная ошибка</BodyText>
-      )}
+      {isFetching && <LoaderSpin />}
 
-      {transactionsList && userData && (
+      {isError && <LoaderError />}
+
+      {transactionsList && (
         <>
           <BodyText size="xlSemibold">Использование токенов</BodyText>
           <ProfileInfoChart
             transactionsList={transactionsList}
-            userData={userData}
+            userData={user}
           />
           <HorizontalDivider color="grayScaleGray3" />
           <BodyText size="xlSemibold">История операций</BodyText>
           <ProfileInfoTable
             transactionsList={transactionsList}
-            userData={userData}
+            userData={user}
           />
         </>
       )}
@@ -94,4 +87,14 @@ const StyledProfileInfo = styled(motion.div)`
 
   height: 100vh;
   overflow-x: scroll;
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.tablet}) {
+    padding: 56px 40px 56px 20px;
+    gap: 18px;
+  }
+
+  @media screen and (max-width: ${(props) => props.theme.mediaStyles.tablet}) {
+    padding: 30px 16px;
+    gap: 14px;
+  }
 `;
