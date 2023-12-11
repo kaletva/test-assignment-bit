@@ -23,8 +23,8 @@ export const ProfileInfo: React.FC<IProps> = ({
     data: transactionsList,
     isFetching,
     isError,
+    error
   } = useUserTransactionsQuery(user.id);
-
   const profileModalRef = useRef<HTMLDivElement>(null);
   useClickOutside(profileModalRef, () => setProfileInfoOpened(false));
 
@@ -44,7 +44,7 @@ export const ProfileInfo: React.FC<IProps> = ({
 
       {isFetching && <LoaderSpin />}
 
-      {isError && <LoaderError />}
+      {isError && <LoaderError error={error}/>}
 
       {transactionsList && (
         <>

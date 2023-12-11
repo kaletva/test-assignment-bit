@@ -19,11 +19,12 @@ export const MyOrganizationUsersTable: React.FC<IProps> = ({
     data: usersList,
     isError,
     isFetching,
+    error,
   } = useUserListQuery(searchParams);
 
   if (isFetching) return <LoaderSpin />;
 
-  if (isError) return <LoaderError />;
+  if (isError) return <LoaderError error={error}/>;
 
   if (usersList) {
     return (
